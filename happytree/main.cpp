@@ -45,12 +45,12 @@ int gLightingMode = 1;
 int gShadowMode = 1;
 int gAnimateLight = 0;
 float gSkyColor[3] = { 70 / 256.0f, 112 / 256.0f, 175 / 256.0f };
-glm::vec3 gLightDir = { 1, 1, 0 };
+glm::vec3 gLightDir(1, 1, 0);
 glm::mat4 mat_proj;
 glm::mat4 mat_modelview;
 glm::mat4 mat_shadow;
 
-glm::vec3 gCamRotate = { 0, 0.2, 20 };
+glm::vec3 gCamRotate(0, 0.2, 20);
 
 GLuint gVertVBO = 0;
 GLuint gNormalVBO = 0;
@@ -679,7 +679,7 @@ int imageExists(char *aBaseFilename, int aTwig)
 			{
 				if (gTwigTextureCount < MAXTEXTURES)
 				{
-					gTwigTexture[gTwigTextureCount] = load_texture(temp);
+					gTwigTexture[gTwigTextureCount] = load_texture((char*) temp);
 					gTwigTextureName[gTwigTextureCount] = mystrdup(temp, 10);
 					gTwigTextureCount++;
 					progress();
@@ -689,7 +689,7 @@ int imageExists(char *aBaseFilename, int aTwig)
 			{
 				if (gTrunkTextureCount < MAXTEXTURES)
 				{
-					gTrunkTexture[gTrunkTextureCount] = load_texture(temp, 0);
+					gTrunkTexture[gTrunkTextureCount] = load_texture((char*) temp, 0);
 					gTrunkTextureName[gTrunkTextureCount] = mystrdup(temp, 11);
 					gTrunkTextureCount++;
 					progress();
@@ -702,69 +702,58 @@ int imageExists(char *aBaseFilename, int aTwig)
 
 void findtextures(char *aBaseDir, int aTwig)
 {
-	WIN32_FIND_DATAA fdFile;
-	HANDLE h = NULL;
+	tinydir_dir dir;
+	tinydir_open(&dir, aBaseDir);
 
-	char path[2048];
-	sprintf(path, "%s\\*.*", aBaseDir);
-
-	h = FindFirstFileA(path, &fdFile);
-
-	if (h == INVALID_HANDLE_VALUE)
-		return;
-
-	do
+	while(dir.has_next)
 	{
-		if (strcmp(fdFile.cFileName, ".") != 0 &&
-			strcmp(fdFile.cFileName, "..") != 0)
-		{
-			if (fdFile.dwFileAttributes &FILE_ATTRIBUTE_DIRECTORY)
-			{				
-				sprintf(path, "%s\\%s\\diffuse", aBaseDir, fdFile.cFileName);
-				imageExists(path, aTwig);
-			}
+		tinydir_file file;
+    	tinydir_readfile(&dir, &file);
+
+		if(file.is_dir) {
+			char path[2048];
+			sprintf(path, "./%s/%s/diffuse", aBaseDir, file.name);
+			imageExists(path, aTwig);
 		}
-	} 
-	while (FindNextFileA(h, &fdFile)); 
+	}
 
-	FindClose(h);
-
+	tinydir_close(&dir);
 }
 
 
 void initGraphicsAssets()
 {
 	// framework will take care of restoring textures on resize
-	tex_twig = load_texture("data/twig.png");
+	tex_twig = load_texture((char*) "./data/twig.png");
 	progress();
-	tex_trunk = load_texture("data/bark.jpg", 0);
+	tex_trunk = load_texture((char*) "./data/bark.jpg", 0);
 	progress();
-	tex_floor = load_texture("data/floor.png", 0);
+	tex_floor = load_texture((char*) "./data/floor.png", 0);
 	progress();
-	tex_preset[0] = load_texture("data/preset1.jpg");
+	tex_preset[0] = load_texture((char*) "./data/preset1.jpg");
 	progress();
-	tex_preset[1] = load_texture("data/preset2.jpg");
+	tex_preset[1] = load_texture((char*) "./data/preset2.jpg");
 	progress();
-	tex_preset[2] = load_texture("data/preset3.jpg");
+	tex_preset[2] = load_texture((char*) "./data/preset3.jpg");
 	progress();
-	tex_preset[3] = load_texture("data/preset4.jpg");
+	tex_preset[3] = load_texture((char*) "./data/preset4.jpg");
 	progress();
-	tex_preset[4] = load_texture("data/preset5.jpg");
+	tex_preset[4] = load_texture((char*) "./data/preset5.jpg");
 	progress();
-	tex_preset[5] = load_texture("data/preset6.jpg");
+	tex_preset[5] = load_texture((char*) "./data/preset6.jpg");
 	progress();
-	tex_preset[6] = load_texture("data/preset7.jpg");
+	tex_preset[6] = load_texture((char*) "./data/preset7.jpg");
 	progress();
-	tex_preset[7] = load_texture("data/preset8.jpg");
+	tex_preset[7] = load_texture((char*) "./data/preset8.jpg");
 
-	findtextures("data\\twig", 1);
-	findtextures("data\\trunk", 0);
+	findtextures((char*) "./data/twig", 1);
+	findtextures((char*) "./data/trunk", 0);
 
 	// keep shader sources in memory in case we need to re-build them on resize
-	gBaseShader.init("data/base.vs", "data/base.fs");
-	gShadowpassShader.init("data/shadowpass.vs", "data/shadowpass.fs");
+	gBaseShader.init((char*) "./data/base.vs", (char*) "./data/base.fs");
+	gShadowpassShader.init((char*) "./data/shadowpass.vs", (char*) "./data/shadowpass.fs");
 #ifdef DEBUG_SHADOWMAPS
-	gShadowDebugShader.init("data/shadowpass.vs", "data/shadowdebug.fs");
+	gShadowDebugShader.init((char*) "./data/shadowpass.vs", (char*) "./data/shadowdebug.fs");
 #endif
 
 	progress();

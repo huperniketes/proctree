@@ -71,7 +71,8 @@ void Shader::build()
 	{
 		char temp[2048];
 		glGetProgramInfoLog(mShaderHandle, 2048, &status, temp);
-		MessageBoxA(NULL, temp, "Shader link failure", MB_ICONERROR);
+		printf("%s\n", temp);
+		//MessageBoxA(NULL, temp, "Shader link failure", MB_ICONERROR);
 	}
 }
 

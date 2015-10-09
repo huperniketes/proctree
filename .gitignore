@@ -10,5 +10,7 @@ treegen.sdf
 Debug/
 happytree/data/trunk/
 happytree/data/twig/
-proctree/*.o
+**/*.o
 proctree/proctree
+happytree/happytree
+
