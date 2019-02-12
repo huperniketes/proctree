@@ -29,7 +29,7 @@
 
 void exporth()
 {
-	SDL_SysWMinfo sysinfo;
+	/*SDL_SysWMinfo sysinfo;
 	SDL_VERSION(&sysinfo.version);
 	SDL_GetWMInfo(&sysinfo);
 	OPENFILENAMEA ofn;
@@ -52,12 +52,12 @@ void exporth()
 	if (GetSaveFileNameA(&ofn))
 	{
 		export_h(temp);
-	}
+	}*/
 }
 
 void exportobj()
 {
-	SDL_SysWMinfo sysinfo;
+	/*SDL_SysWMinfo sysinfo;
 	SDL_VERSION(&sysinfo.version);
 	SDL_GetWMInfo(&sysinfo);
 	OPENFILENAMEA ofn;
@@ -80,12 +80,12 @@ void exportobj()
 	if (GetSaveFileNameA(&ofn))
 	{
 		export_obj(temp);
-	}
+	}*/
 }
 
 int loadcustomtexture(int &aTexHandle, int aClamp)
 {
-	SDL_SysWMinfo sysinfo;
+	/*SDL_SysWMinfo sysinfo;
 	SDL_VERSION(&sysinfo.version);
 	SDL_GetWMInfo(&sysinfo);
 	OPENFILENAMEA ofn;
@@ -109,13 +109,13 @@ int loadcustomtexture(int &aTexHandle, int aClamp)
 	{
 		aTexHandle = load_texture(temp, aClamp);
 		return 1;
-	}
+	}*/
 	return 0;
 }
 
 void loadproject()
 {
-	SDL_SysWMinfo sysinfo;
+	/*SDL_SysWMinfo sysinfo;
 	SDL_VERSION(&sysinfo.version);
 	SDL_GetWMInfo(&sysinfo);
 	OPENFILENAMEA ofn;
@@ -138,12 +138,12 @@ void loadproject()
 	if (GetOpenFileNameA(&ofn))
 	{
 		load_htr(temp);
-	}
+	}*/
 }
 
 void saveproject()
 {
-	SDL_SysWMinfo sysinfo;
+	/*SDL_SysWMinfo sysinfo;
 	SDL_VERSION(&sysinfo.version);
 	SDL_GetWMInfo(&sysinfo);
 	OPENFILENAMEA ofn;
@@ -166,7 +166,7 @@ void saveproject()
 	if (GetSaveFileNameA(&ofn))
 	{
 		save_htr(temp);
-	}
+	}*/
 }
 
 void export_obj(char *aFilename)
@@ -272,41 +272,57 @@ void export_h(char *aFilename)
 	fclose(f);
 }
 
-void load_htr(char *aFilename)
+bool load_htr(char *aFilename)
 {
 	FILE *f = fopen(aFilename, "rb");
-	if (!f) return;
+	if(! f) {
+		printf("loading file failed: %s\n", aFilename);
+		return false;
+	}
+
 	int sig;
-	fread(&sig, 1, sizeof(int), f);
+
+	if(! fread(&sig, 1, sizeof(int), f)) {
+		printf("reading file failed: %s\n", aFilename);
+		return false;
+	}
+
 	if (sig != 0x00525448)
 	{
 		fclose(f);
-		MessageBoxA(NULL, "Error loading file: signature not recognized.", "Error loading file", MB_ICONERROR);
-		return;
+		//MessageBoxA(NULL, "Error loading file: signature not recognized.", "Error loading file", MB_ICONERROR);
+		printf("Error loading file: signature not recognized\n");
+		return false;
 	}
-	fread(&gTree.mProperties.mClumpMax, 1, sizeof(float), f);
-	fread(&gTree.mProperties.mClumpMin, 1, sizeof(float), f);
-	fread(&gTree.mProperties.mLengthFalloffFactor, 1, sizeof(float), f);
-	fread(&gTree.mProperties.mLengthFalloffPower, 1, sizeof(float), f);
-	fread(&gTree.mProperties.mBranchFactor, 1, sizeof(float), f);
-	fread(&gTree.mProperties.mRadiusFalloffRate, 1, sizeof(float), f);
-	fread(&gTree.mProperties.mClimbRate, 1, sizeof(float), f);
-	fread(&gTree.mProperties.mTrunkKink, 1, sizeof(float), f);
-	fread(&gTree.mProperties.mMaxRadius, 1, sizeof(float), f);
-	fread(&gTree.mProperties.mTreeSteps, 1, sizeof(int), f);
-	fread(&gTree.mProperties.mTaperRate, 1, sizeof(float), f);
-	fread(&gTree.mProperties.mTwistRate, 1, sizeof(float), f);
-	fread(&gTree.mProperties.mSegments, 1, sizeof(int), f);
-	fread(&gTree.mProperties.mLevels, 1, sizeof(int), f);
-	fread(&gTree.mProperties.mSweepAmount, 1, sizeof(float), f);
-	fread(&gTree.mProperties.mInitialBranchLength, 1, sizeof(float), f);
-	fread(&gTree.mProperties.mTrunkLength, 1, sizeof(float), f);
-	fread(&gTree.mProperties.mDropAmount, 1, sizeof(float), f);
-	fread(&gTree.mProperties.mGrowAmount, 1, sizeof(float), f);
-	fread(&gTree.mProperties.mVMultiplier, 1, sizeof(float), f);
-	fread(&gTree.mProperties.mTwigScale, 1, sizeof(float), f);
-	fread(&gTree.mProperties.mSeed, 1, sizeof(int), f);
+
+
+	if(! fread(&gTree.mProperties.mClumpMax, 1, sizeof(float), f)
+	  || fread(&gTree.mProperties.mClumpMin, 1, sizeof(float), f)
+	  || fread(&gTree.mProperties.mLengthFalloffFactor, 1, sizeof(float), f)
+	  || fread(&gTree.mProperties.mLengthFalloffPower, 1, sizeof(float), f)
+	  || fread(&gTree.mProperties.mBranchFactor, 1, sizeof(float), f)
+	  || fread(&gTree.mProperties.mRadiusFalloffRate, 1, sizeof(float), f)
+	  || fread(&gTree.mProperties.mClimbRate, 1, sizeof(float), f)
+	  || fread(&gTree.mProperties.mTrunkKink, 1, sizeof(float), f)
+	  || fread(&gTree.mProperties.mMaxRadius, 1, sizeof(float), f)
+	  || fread(&gTree.mProperties.mTreeSteps, 1, sizeof(int), f)
+	  || fread(&gTree.mProperties.mTaperRate, 1, sizeof(float), f)
+	  || fread(&gTree.mProperties.mTwistRate, 1, sizeof(float), f)
+	  || fread(&gTree.mProperties.mSegments, 1, sizeof(int), f)
+	  || fread(&gTree.mProperties.mLevels, 1, sizeof(int), f)
+	  || fread(&gTree.mProperties.mSweepAmount, 1, sizeof(float), f)
+	  || fread(&gTree.mProperties.mInitialBranchLength, 1, sizeof(float), f)
+	  || fread(&gTree.mProperties.mTrunkLength, 1, sizeof(float), f)
+	  || fread(&gTree.mProperties.mDropAmount, 1, sizeof(float), f)
+	  || fread(&gTree.mProperties.mGrowAmount, 1, sizeof(float), f)
+	  || fread(&gTree.mProperties.mVMultiplier, 1, sizeof(float), f)
+	  || fread(&gTree.mProperties.mTwigScale, 1, sizeof(float), f)
+	  || fread(&gTree.mProperties.mSeed, 1, sizeof(int), f)) {
+		printf("reading file failed: %s\n", aFilename);
+	}
 	fclose(f);
+
+	return true;
 }
 
 void save_htr(char *aFilename)
@@ -349,6 +365,7 @@ char * loadfile(char *aFilename, int &aLen)
 	if (!f)
 	{
 		aLen = 0;
+		printf("file loading failed: %s\n", aFilename);
 		return 0;
 	}
 	fseek(f, 0, SEEK_END);
@@ -356,7 +373,10 @@ char * loadfile(char *aFilename, int &aLen)
 	fseek(f, 0, SEEK_SET);
 	char *buf = new char[aLen + 1];
 	buf[aLen] = 0;
-	fread(buf, 1, aLen, f);
+	if(! fread(buf, 1, aLen, f)) {
+		printf("file reading failed: %s\n", aFilename);
+		return 0;
+	}
 	fclose(f);
 	return buf;
 }

@@ -25,14 +25,15 @@
 *
 */
 
-#include <Windows.h> // file i/o dialogs
 #include "toolkit.h"
 #include "SDL_syswm.h"
 #include "../proctree/proctree.h"
+#define GLM_FORCE_RADIANS
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "imgui.h"
 #include "shader.h"
+#include "tinydir.h"
 
 #define TITLE "HappyTree 20150123"
 #define ONCE(x) { static int __once = 1; if (__once) {x;} __once = 0; }
@@ -112,7 +113,7 @@ void saveproject();
 void loadproject();
 void export_obj(char *aFilename);
 void export_h(char *aFilename);
-void load_htr(char *aFilename);
+bool load_htr(char *aFilename);
 void save_htr(char *aFilename);
 char * loadfile(char *aFilename, int &aLen);
 void init_gl_resources();

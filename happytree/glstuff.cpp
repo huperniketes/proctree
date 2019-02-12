@@ -121,7 +121,7 @@ void calc_shadowmatrix()
 void setup_shadow()
 {
 	gShadowpassShader.use();
-	GLuint texturepos = gShadowpassShader.uniformLocation("tex");
+	GLuint texturepos = gShadowpassShader.uniformLocation((char*) "tex");
 
 	glUniform1i(texturepos, 0);
 	glBindFramebuffer(GL_FRAMEBUFFER, rb_shadowfbo);
@@ -164,13 +164,13 @@ void setup_rendering(int tick)
 	glCullFace(GL_BACK);
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	gBaseShader.use();
-	GLuint lightingpos = gBaseShader.uniformLocation("EnableLighting");
-	GLuint texturingpos = gBaseShader.uniformLocation("EnableTexture");
-	GLuint shadowingpos = gBaseShader.uniformLocation("EnableShadows");
-	GLuint shadowmatrixpos = gBaseShader.uniformLocation("ShadowMatrix");
-	GLuint texturepos = gBaseShader.uniformLocation("tex");
-	GLuint shadowmappos = gBaseShader.uniformLocation("shadowmap");
-	GLuint lightdir = gBaseShader.uniformLocation("lightdir");
+	GLuint lightingpos = gBaseShader.uniformLocation((char*) "EnableLighting");
+	GLuint texturingpos = gBaseShader.uniformLocation((char*) "EnableTexture");
+	GLuint shadowingpos = gBaseShader.uniformLocation((char*) "EnableShadows");
+	GLuint shadowmatrixpos = gBaseShader.uniformLocation((char*) "ShadowMatrix");
+	GLuint texturepos = gBaseShader.uniformLocation((char*) "tex");
+	GLuint shadowmappos = gBaseShader.uniformLocation((char*) "shadowmap");
+	GLuint lightdir = gBaseShader.uniformLocation((char*) "lightdir");
 	glUniform1i(lightingpos, gLightingMode);
 	glUniform1i(texturingpos, gTextureMode);
 	glUniform1i(shadowingpos, gShadowMode);
@@ -199,7 +199,7 @@ void setup_rendering(int tick)
 
 void draw_floor(Shader &shader)
 {
-	GLuint matrixpos = shader.uniformLocation("RotationMatrix");
+	GLuint matrixpos = shader.uniformLocation((char*) "RotationMatrix");
 
 	glm::mat4 mat;
 
@@ -265,7 +265,7 @@ void finish_draw_tree()
 
 void draw_tree(Shader &shader)
 {
-	GLuint matrixpos = shader.uniformLocation("RotationMatrix");
+	GLuint matrixpos = shader.uniformLocation((char*) "RotationMatrix");
 
 	glm::mat4 mat;
 
@@ -303,7 +303,7 @@ void prep_draw_twig()
 
 void draw_twig(Shader &shader)
 {
-	GLuint matrixpos = shader.uniformLocation("RotationMatrix");
+	GLuint matrixpos = shader.uniformLocation((char*) "RotationMatrix");
 
 	glm::mat4 mat;
 
