@@ -29,7 +29,9 @@
 
 void exporth()
 {
-	/*SDL_SysWMinfo sysinfo;
+
+#if		defined(POSTPONED)
+	SDL_SysWMinfo sysinfo;
 	SDL_VERSION(&sysinfo.version);
 	SDL_GetWMInfo(&sysinfo);
 	OPENFILENAMEA ofn;
@@ -52,12 +54,15 @@ void exporth()
 	if (GetSaveFileNameA(&ofn))
 	{
 		export_h(temp);
-	}*/
+	}
+#endif	// defined(POSTPONED)
 }
 
 void exportobj()
 {
-	/*SDL_SysWMinfo sysinfo;
+
+#if		defined(POSTPONED)
+	SDL_SysWMinfo sysinfo;
 	SDL_VERSION(&sysinfo.version);
 	SDL_GetWMInfo(&sysinfo);
 	OPENFILENAMEA ofn;
@@ -80,12 +85,15 @@ void exportobj()
 	if (GetSaveFileNameA(&ofn))
 	{
 		export_obj(temp);
-	}*/
+	}
+#endif	// defined(POSTPONED)
 }
 
 int loadcustomtexture(int &aTexHandle, int aClamp)
 {
-	/*SDL_SysWMinfo sysinfo;
+
+#if		defined(POSTPONED)
+	SDL_SysWMinfo sysinfo;
 	SDL_VERSION(&sysinfo.version);
 	SDL_GetWMInfo(&sysinfo);
 	OPENFILENAMEA ofn;
@@ -109,13 +117,16 @@ int loadcustomtexture(int &aTexHandle, int aClamp)
 	{
 		aTexHandle = load_texture(temp, aClamp);
 		return 1;
-	}*/
+	}
+#endif	// defined(POSTPONED)
 	return 0;
 }
 
 void loadproject()
 {
-	/*SDL_SysWMinfo sysinfo;
+
+#if		defined(POSTPONED)
+	SDL_SysWMinfo sysinfo;
 	SDL_VERSION(&sysinfo.version);
 	SDL_GetWMInfo(&sysinfo);
 	OPENFILENAMEA ofn;
@@ -138,12 +149,15 @@ void loadproject()
 	if (GetOpenFileNameA(&ofn))
 	{
 		load_htr(temp);
-	}*/
+	}
+#endif	// defined(POSTPONED)
 }
 
 void saveproject()
 {
-	/*SDL_SysWMinfo sysinfo;
+
+#if		defined(POSTPONED)
+	SDL_SysWMinfo sysinfo;
 	SDL_VERSION(&sysinfo.version);
 	SDL_GetWMInfo(&sysinfo);
 	OPENFILENAMEA ofn;
@@ -166,7 +180,8 @@ void saveproject()
 	if (GetSaveFileNameA(&ofn))
 	{
 		save_htr(temp);
-	}*/
+	}
+#endif	// defined(POSTPONED)
 }
 
 void export_obj(char *aFilename)
