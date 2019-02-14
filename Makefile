@@ -1,5 +1,6 @@
 CXX=g++
-CPPFLAGS=-std=c++11 -O3 -fpermissive
+CCFLAGS=-O3 -Wall -Wextra -pedantic
+CPPFLAGS=-std=c++11 $(CCFLAGS)
 PROCTREE_LDFLAGS=
 HAPPYTREE_LDFLAGS=-lGL -lSDL
 HAPPYTREE_INCLUDES=-I /usr/include/SDL -I /usr/include/gl
@@ -29,7 +30,7 @@ $(HAPPYTREE_DIR)/diskio.o: $(HAPPYTREE_DIR)/diskio.cpp
 	$(CXX) $(CPPFLAGS) $(HAPPYTREE_INCLUDES) -c $(HAPPYTREE_DIR)/diskio.cpp -o $(HAPPYTREE_DIR)/diskio.o
 
 $(HAPPYTREE_DIR)/GLee.o: $(HAPPYTREE_DIR)/GLee.c $(HAPPYTREE_DIR)/GLee.h
-	$(CXX) $(CPPFLAGS) $(HAPPYTREE_INCLUDES) -c $(HAPPYTREE_DIR)/GLee.c -o $(HAPPYTREE_DIR)/GLee.o
+	$(CC) $(CCFLAGS) $(HAPPYTREE_INCLUDES) -c $(HAPPYTREE_DIR)/GLee.c -o $(HAPPYTREE_DIR)/GLee.o
 
 $(HAPPYTREE_DIR)/glstuff.o: $(HAPPYTREE_DIR)/glstuff.cpp
 	$(CXX) $(CPPFLAGS) $(HAPPYTREE_INCLUDES) -c $(HAPPYTREE_DIR)/glstuff.cpp -o $(HAPPYTREE_DIR)/glstuff.o
@@ -50,7 +51,7 @@ $(HAPPYTREE_DIR)/shader.o: $(HAPPYTREE_DIR)/shader.cpp $(HAPPYTREE_DIR)/shader.h
 	$(CXX) $(CPPFLAGS) $(HAPPYTREE_INCLUDES) -c $(HAPPYTREE_DIR)/shader.cpp -o $(HAPPYTREE_DIR)/shader.o
 
 $(HAPPYTREE_DIR)/stb_image.o: $(HAPPYTREE_DIR)/stb_image.c $(HAPPYTREE_DIR)/stb_image.h
-	$(CXX) $(CPPFLAGS) $(HAPPYTREE_INCLUDES) -c $(HAPPYTREE_DIR)/stb_image.c -o $(HAPPYTREE_DIR)/stb_image.o
+	$(CC) $(CCFLAGS) $(HAPPYTREE_INCLUDES) -c $(HAPPYTREE_DIR)/stb_image.c -o $(HAPPYTREE_DIR)/stb_image.o
 
 $(HAPPYTREE_DIR)/toolkit.o: $(HAPPYTREE_DIR)/toolkit.cpp $(HAPPYTREE_DIR)/stb_image.h $(HAPPYTREE_DIR)/GLee.h
 	$(CXX) $(CPPFLAGS) $(HAPPYTREE_INCLUDES) -c $(HAPPYTREE_DIR)/toolkit.cpp -o $(HAPPYTREE_DIR)/toolkit.o
