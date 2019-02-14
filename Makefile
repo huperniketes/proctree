@@ -8,10 +8,10 @@ HAPPYTREE_DIR=happytree
 RM=rm -f
 
 
-all: proctree happytree
+all: $(PROCTREE_DIR)/proctree $(HAPPYTREE_DIR)/happytree
 	@echo "complete"
 
-proctree: $(PROCTREE_DIR)/main.o $(PROCTREE_DIR)/proctree.o
+$(PROCTREE_DIR)/proctree: $(PROCTREE_DIR)/main.o $(PROCTREE_DIR)/proctree.o
 	$(CXX) $(CPPFLAGS) $(PROCTREE_DIR)/main.o $(PROCTREE_DIR)/proctree.o -o $(PROCTREE_DIR)/proctree $(PROCTREE_LDFLAGS)
 	@echo "proctree built"
 
@@ -21,7 +21,7 @@ $(PROCTREE_DIR)/main.o: $(PROCTREE_DIR)/main.cpp
 $(PROCTREE_DIR)/proctree.o: $(PROCTREE_DIR)/proctree.cpp $(PROCTREE_DIR)/proctree.h
 	$(CXX) $(CPPFLAGS) -c $(PROCTREE_DIR)/proctree.cpp -o $(PROCTREE_DIR)/proctree.o
 
-happytree: $(HAPPYTREE_DIR)/diskio.o $(HAPPYTREE_DIR)/GLee.o $(HAPPYTREE_DIR)/glstuff.o $(HAPPYTREE_DIR)/imgui.o $(HAPPYTREE_DIR)/imgui_impl.o $(HAPPYTREE_DIR)/main.o $(HAPPYTREE_DIR)/presets.o $(HAPPYTREE_DIR)/shader.o $(HAPPYTREE_DIR)/stb_image.o $(HAPPYTREE_DIR)/toolkit.o $(PROCTREE_DIR)/proctree.o
+$(HAPPYTREE_DIR)/happytree: $(HAPPYTREE_DIR)/diskio.o $(HAPPYTREE_DIR)/GLee.o $(HAPPYTREE_DIR)/glstuff.o $(HAPPYTREE_DIR)/imgui.o $(HAPPYTREE_DIR)/imgui_impl.o $(HAPPYTREE_DIR)/main.o $(HAPPYTREE_DIR)/presets.o $(HAPPYTREE_DIR)/shader.o $(HAPPYTREE_DIR)/stb_image.o $(HAPPYTREE_DIR)/toolkit.o $(PROCTREE_DIR)/proctree.o
 	$(CXX) $(CPPFLAGS) $(HAPPYTREE_DIR)/diskio.o $(HAPPYTREE_DIR)/GLee.o $(HAPPYTREE_DIR)/glstuff.o $(HAPPYTREE_DIR)/imgui.o $(HAPPYTREE_DIR)/imgui_impl.o $(HAPPYTREE_DIR)/main.o $(HAPPYTREE_DIR)/presets.o $(HAPPYTREE_DIR)/shader.o $(HAPPYTREE_DIR)/stb_image.o $(HAPPYTREE_DIR)/toolkit.o $(PROCTREE_DIR)/proctree.o -o $(HAPPYTREE_DIR)/happytree $(HAPPYTREE_LDFLAGS)
 	@echo "happytree built"
 
