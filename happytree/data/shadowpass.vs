@@ -1,10 +1,10 @@
-#version 330
+#version 120
 
-layout(location = 0) in vec3 vertexPosition;
-layout(location = 1) in vec3 vertexNormal;
-layout(location = 2) in vec2 vertexTexCoord;
+attribute vec3 vertexPosition;
+attribute vec3 vertexNormal;
+attribute vec2 vertexTexCoord;
 
-out vec2 texcoord;
+varying vec2 texcoord;
 
 uniform mat4 RotationMatrix;
 

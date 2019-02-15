@@ -1,12 +1,12 @@
-#version 330
+#version 120
 
-layout(location = 0) in vec3 vertexPosition;
-layout(location = 1) in vec3 vertexNormal;
-layout(location = 2) in vec2 vertexTexCoord;
+attribute vec3 vertexPosition;
+attribute vec3 vertexNormal;
+attribute vec2 vertexTexCoord;
 
-out vec3 color;
-out vec2 texcoord;
-out vec4 origcoord;
+varying vec3 color;
+varying vec2 texcoord;
+varying vec4 origcoord;
 
 uniform mat4 RotationMatrix;
 uniform vec3 lightdir;

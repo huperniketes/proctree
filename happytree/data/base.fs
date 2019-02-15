@@ -1,10 +1,9 @@
-#version 330
+#version 120
 
-in vec3 color;
-in vec2 texcoord;
-in vec4 origcoord;
+varying vec3 color;
+varying vec2 texcoord;
+varying vec4 origcoord;
 
-layout(location = 0) out vec4 FragColor;
 uniform sampler2D tex;
 uniform sampler2D shadowmap;
 uniform bool EnableTexture;
@@ -14,7 +13,7 @@ uniform mat4 ShadowMatrix;
 
 float getshadowsample(vec4 coord)
 {
-    float shadowdepth = texture(shadowmap, coord.xy).r;
+    float shadowdepth = texture2D(shadowmap, coord.xy).r;
 
     if (coord.w > 0.0 && 
         shadowdepth < coord.z &&
@@ -59,7 +58,7 @@ void main()
 {
     vec4 t, s;
 
-    t = texture(tex, texcoord);
+    t = texture2D(tex, texcoord);
 
     if (t.a < 0.5)
         discard;
@@ -92,5 +91,5 @@ void main()
         s = vec4(1);
     }
 
-    FragColor = vec4(color, 1.0) * t * s;
+    gl_FragColor = vec4(color, 1.0) * t * s;
 }
