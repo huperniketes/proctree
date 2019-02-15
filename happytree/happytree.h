@@ -65,15 +65,15 @@
 #define PHYSICS_FPS 100
 
 extern char *gTwigTextureName[MAXTEXTURES];
-extern int gTwigTexture[MAXTEXTURES];
+extern intptr_t gTwigTexture[MAXTEXTURES];
 extern int gTwigTextureCount;
 extern char *gTrunkTextureName[MAXTEXTURES];
-extern int gTrunkTexture[MAXTEXTURES];
+extern intptr_t gTrunkTexture[MAXTEXTURES];
 extern int gTrunkTextureCount;
 extern int gTwigTextureIndex;
 extern int gTrunkTextureIndex;
 extern int tex_twig, tex_trunk, tex_floor;
-extern int tex_preset[8];
+extern intptr_t tex_preset[8];
 
 extern GLuint gVertVBO;
 extern GLuint gNormalVBO;

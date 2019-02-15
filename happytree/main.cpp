@@ -27,15 +27,15 @@
 #include "happytree.h"
 
 char *gTwigTextureName[MAXTEXTURES];
-int gTwigTexture[MAXTEXTURES];
+intptr_t gTwigTexture[MAXTEXTURES];
 int gTwigTextureCount = 0;
 char *gTrunkTextureName[MAXTEXTURES];
-int gTrunkTexture[MAXTEXTURES];
+intptr_t gTrunkTexture[MAXTEXTURES];
 int gTrunkTextureCount = 0;
 int gTwigTextureIndex = -1;
 int gTrunkTextureIndex = -1;
 int tex_twig, tex_trunk, tex_floor;
-int tex_preset[8];
+intptr_t tex_preset[8];
 
 int gForestMode = 0;
 int gTextureMode = 1;
@@ -667,7 +667,7 @@ int imageExists(char *aBaseFilename, int aTwig)
 	
 	char *ext[] = { "TGA", "PNG", "JPG", "JPEG", "BMP", "PSD", "GIF", "HDR", "PIC", "PPM", "PGM"};
 	char temp[2048];
-	int i;
+	uintptr_t i;
 	for (i = 0; i < sizeof(ext)/sizeof(char*); i++)
 	{
 		sprintf(temp, "%s.%s", aBaseFilename, ext[i]);
