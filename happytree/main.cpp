@@ -665,7 +665,7 @@ char * mystrdup(char * src, int ofs)
 int imageExists(char *aBaseFilename, int aTwig)
 {
 	
-	char *ext[] = { "TGA", "PNG", "JPG", "JPEG", "BMP", "PSD", "GIF", "HDR", "PIC", "PPM", "PGM"};
+	char const *ext[] = { "TGA", "PNG", "JPG", "JPEG", "BMP", "PSD", "GIF", "HDR", "PIC", "PPM", "PGM"};
 	char temp[2048];
 	uintptr_t i;
 	for (i = 0; i < sizeof(ext)/sizeof(char*); i++)
