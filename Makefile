@@ -1,9 +1,11 @@
 CXX=g++
-CCFLAGS=-O3 -Wall -Wextra -pedantic
+CCFLAGS=-O3 -Wall -Wextra -pedantic -F $(SDL_DIR)
 CPPFLAGS=-std=c++11 $(CCFLAGS)
+SDL_DIR=				# Set this variable to the path to the SDL framework.
+EXTERN_LIBS_DIR=		# Set this variable to the path to the glm library.
 PROCTREE_LDFLAGS=
-HAPPYTREE_LDFLAGS=-lGL -lSDL
-HAPPYTREE_INCLUDES=-I /usr/include/SDL -I /usr/include/gl
+HAPPYTREE_LDFLAGS=-framework OpenGL -framework Foundation -F $(SDL_DIR) -framework SDL
+HAPPYTREE_INCLUDES=-I $(SDL_DIR) -I $(EXTERN_LIBS_DIR)/glm
 PROCTREE_DIR=proctree
 HAPPYTREE_DIR=happytree
 RM=rm -f
