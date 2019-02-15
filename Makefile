@@ -2,9 +2,10 @@ CXX=g++
 CCFLAGS=-O3 -Wall -Wextra -pedantic -F $(SDL_DIR)
 CPPFLAGS=-std=c++11 $(CCFLAGS)
 SDL_DIR=				# Set this variable to the path to the SDL framework.
+SDL_DEVEL_LITE_DIR=		# Set this variable to the path of SDL's main replacement on macOS.
 EXTERN_LIBS_DIR=		# Set this variable to the path to the glm library.
 PROCTREE_LDFLAGS=
-HAPPYTREE_LDFLAGS=-framework OpenGL -framework Foundation -F $(SDL_DIR) -framework SDL
+HAPPYTREE_LDFLAGS=-framework OpenGL -framework Foundation -framework Cocoa -F $(SDL_DIR) -framework SDL
 HAPPYTREE_INCLUDES=-I $(SDL_DIR) -I $(EXTERN_LIBS_DIR)/glm
 PROCTREE_DIR=proctree
 HAPPYTREE_DIR=happytree
@@ -24,8 +25,8 @@ $(PROCTREE_DIR)/main.o: $(PROCTREE_DIR)/main.cpp
 $(PROCTREE_DIR)/proctree.o: $(PROCTREE_DIR)/proctree.cpp $(PROCTREE_DIR)/proctree.h
 	$(CXX) $(CPPFLAGS) -c $(PROCTREE_DIR)/proctree.cpp -o $(PROCTREE_DIR)/proctree.o
 
-$(HAPPYTREE_DIR)/happytree: $(HAPPYTREE_DIR)/diskio.o $(HAPPYTREE_DIR)/GLee.o $(HAPPYTREE_DIR)/glstuff.o $(HAPPYTREE_DIR)/imgui.o $(HAPPYTREE_DIR)/imgui_impl.o $(HAPPYTREE_DIR)/main.o $(HAPPYTREE_DIR)/presets.o $(HAPPYTREE_DIR)/shader.o $(HAPPYTREE_DIR)/stb_image.o $(HAPPYTREE_DIR)/toolkit.o $(PROCTREE_DIR)/proctree.o
-	$(CXX) $(CPPFLAGS) $(HAPPYTREE_DIR)/diskio.o $(HAPPYTREE_DIR)/GLee.o $(HAPPYTREE_DIR)/glstuff.o $(HAPPYTREE_DIR)/imgui.o $(HAPPYTREE_DIR)/imgui_impl.o $(HAPPYTREE_DIR)/main.o $(HAPPYTREE_DIR)/presets.o $(HAPPYTREE_DIR)/shader.o $(HAPPYTREE_DIR)/stb_image.o $(HAPPYTREE_DIR)/toolkit.o $(PROCTREE_DIR)/proctree.o -o $(HAPPYTREE_DIR)/happytree $(HAPPYTREE_LDFLAGS)
+$(HAPPYTREE_DIR)/happytree: $(HAPPYTREE_DIR)/diskio.o $(HAPPYTREE_DIR)/GLee.o $(HAPPYTREE_DIR)/glstuff.o $(HAPPYTREE_DIR)/imgui.o $(HAPPYTREE_DIR)/imgui_impl.o $(HAPPYTREE_DIR)/main.o $(HAPPYTREE_DIR)/presets.o $(HAPPYTREE_DIR)/shader.o $(HAPPYTREE_DIR)/stb_image.o $(HAPPYTREE_DIR)/toolkit.o $(PROCTREE_DIR)/proctree.o $(HAPPYTREE_DIR)/SDLMain.o
+	$(CXX) $(CPPFLAGS) $(HAPPYTREE_DIR)/diskio.o $(HAPPYTREE_DIR)/GLee.o $(HAPPYTREE_DIR)/glstuff.o $(HAPPYTREE_DIR)/imgui.o $(HAPPYTREE_DIR)/imgui_impl.o $(HAPPYTREE_DIR)/main.o $(HAPPYTREE_DIR)/presets.o $(HAPPYTREE_DIR)/shader.o $(HAPPYTREE_DIR)/stb_image.o $(HAPPYTREE_DIR)/toolkit.o $(PROCTREE_DIR)/proctree.o $(HAPPYTREE_DIR)/SDLMain.o -o $(HAPPYTREE_DIR)/happytree $(HAPPYTREE_LDFLAGS)
 	@echo "happytree built"
 
 $(HAPPYTREE_DIR)/diskio.o: $(HAPPYTREE_DIR)/diskio.cpp
@@ -57,6 +58,9 @@ $(HAPPYTREE_DIR)/stb_image.o: $(HAPPYTREE_DIR)/stb_image.c $(HAPPYTREE_DIR)/stb_
 
 $(HAPPYTREE_DIR)/toolkit.o: $(HAPPYTREE_DIR)/toolkit.cpp $(HAPPYTREE_DIR)/stb_image.h $(HAPPYTREE_DIR)/GLee.h
 	$(CXX) $(CPPFLAGS) $(HAPPYTREE_INCLUDES) -c $(HAPPYTREE_DIR)/toolkit.cpp -o $(HAPPYTREE_DIR)/toolkit.o
+
+$(HAPPYTREE_DIR)/SDLMain.o: $(SDL_DEVEL_LITE_DIR)/SDLMain.m $(SDL_DEVEL_LITE_DIR)/SDLMain.h
+	$(CC) $(CCFLAGS) $(HAPPYTREE_INCLUDES) -I $(SDL_DIR)/SDL.framework/Headers -c $(SDL_DEVEL_LITE_DIR)/SDLMain.m -o $(HAPPYTREE_DIR)/SDLMain.o
 
 clean:
 	$(RM) $(PROCTREE_DIR)/*.o $(PROCTREE_DIR)/proctree $(HAPPYTREE_DIR)/*.o $(HAPPYTREE_DIR)/happytree
